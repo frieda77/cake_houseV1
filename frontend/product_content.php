@@ -1,4 +1,11 @@
+<?php
+require_once("../connection/database.php");
+$sth = $db->query("SELECT * FROM product_category");
+$categories = $sth->fetchAll(PDO::FETCH_ASSOC);
 
+$sth2 = $db->query("SELECT * FROM product WHERE productID =".$_GET['productID']." ORDER BY createdDate DESC");
+$product = $sth2->fetch(PDO::FETCH_ASSOC);
+?>
 <!doctype html>
 <!-- Website template by freewebsitetemplates.com -->
 <html>
@@ -8,6 +15,22 @@
 	<title>product - Cake House</title>
 	<?php require_once("template/files.php"); ?>
 	<link rel="stylesheet" href="../assets/css/cart.css">
+	<script type="text/javascript" src="../assets/js/jquery.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.quantity-button').click(function(){
+			var quantity = 1;
+			quantity = $('input[name="Quantity"]').val();
+			if($(this).find('i').hasClass('fa-plus')){
+				quantity++;
+			}else {
+				if (quantity > 1)quantity--;
+					console.log("減數量="+quantity);
+				}
+				$('input[name="Quantity"]').val(quantity);
+		});
+		});
+	</script>
 </head>
 <body>
 	<div id="page">
@@ -22,23 +45,22 @@
 				<ol class="breadcrumb">
 				  <li><a href="../index.php"><i class="fa fa-home" aria-hidden="true"></i></a></li>
 				  <li><a href="#">蛋糕</a></li>
-				  <li class="active"><?php echo $product['Name']; ?></li>
+				  <li class="active"><?php echo $product['name']; ?></li>
 				</ol>
 				<div id="Product">
 
 					<div class="content-left">
-						<img src="../uploads/product/123.jpg" alt="">
+						<img src="../uploads/products/<?php echo $product['picture'];?>" alt="">
 					</div>
 					<div class="content-right">
-						<h2><?php echo $product['Name']; ?></h2>
+						<h2><?php echo $product['name']; ?></h2>
 						<form class="" action="add_cart.php" method="post">
 							<table id="ProductTable">
 								<tr>
 									<td width="20%">價格：</td>
 									<td class="price">
 
-
-										NT$150
+								 <?php echo "NT$".$product['price'];?>
 									</td>
 								</tr>
 								<tr>

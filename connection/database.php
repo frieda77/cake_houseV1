@@ -4,7 +4,7 @@ $db_type = 'mysql';//使用那一種資料庫
 $db_host = 'localhost';//主機位置
 $db_name = 'sweethouse';//資料庫名稱
 $db_user = 'webmaster';//使用者
-$db_password= '12345';//密碼
+$db_password= '123456';//密碼
 
 // 資料庫連線
 try {
