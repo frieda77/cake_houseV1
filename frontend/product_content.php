@@ -1,4 +1,6 @@
 <?php
+session_start();
+/*unset($_SESSION['Cart']);*///unset指令是直接清除資料
 require_once("../connection/database.php");
 $sth = $db->query("SELECT * FROM product_category");
 $categories = $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -20,17 +22,26 @@ $product = $sth2->fetch(PDO::FETCH_ASSOC);
 		$(function(){
 			$('.quantity-button').click(function(){
 			var quantity = 1;
-			quantity = $('input[name="Quantity"]').val();
+			quantity = $('input[name="quantity"]').val();
 			if($(this).find('i').hasClass('fa-plus')){
 				quantity++;
 			}else {
 				if (quantity > 1)quantity--;
 					console.log("減數量="+quantity);
 				}
-				$('input[name="Quantity"]').val(quantity);
+				$('input[name="quantity"]').val(quantity);
 		});
 		});
 	</script>
+	<?php
+if (isset($_GET['Existed']) && $_GET['Existed']!= null) {
+	if ($_GET['Existed'] == 'true') {
+		echo"<script>alert('此商品已存在購物車，請至「我的購物車」修改數量。')</script>";
+	}else {
+		echo "<script>alert('成功加入購物車!')</script>";
+	}
+}
+	?>
 </head>
 <body>
 	<div id="page">
@@ -69,14 +80,19 @@ $product = $sth2->fetch(PDO::FETCH_ASSOC);
 										<div class="quantity-button">
 											<i class="fa fa-minus" aria-hidden="true"></i>
 										</div>
-										<input type="text" name="Quantity" value="1">
+										<input type="text" name="quantity" value="1">
 										<div class="quantity-button">
 											<i class="fa fa-plus" aria-hidden="true"></i>
 										</div>
 									</td>
 								</tr>
 								<tr>
-									<td colspan="2"><input type="submit" class="cart" value="加入購物車"></td>
+									<td colspan="2">
+										<input type="hidden" name="name" value="<?php echo $product['name'];?>">
+										<input type="hidden" name="price" value="<?php echo $product['price'];?>">
+										<input type="hidden" name="picture" value="<?php echo $product['picture'];?>">
+										<input type="hidden" name="productID" value="<?php echo $product['productID'];?>">
+										<input type="submit" class="cart" value="加入購物車"></td>
 								</tr>
 							</table>
 						</form>

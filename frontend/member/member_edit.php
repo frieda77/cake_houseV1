@@ -39,7 +39,7 @@
 								<tr>
 									<th>姓名：</th>
 									<td>
-										<input type="text" name="Name" value="Andy">
+										<input type="text" name="name" id="name" value="name">
 										<div class="help-block with-errors"></div>
 									</td>
 								</tr>
@@ -52,7 +52,7 @@
 								</tr>
 								<tr>
 									<th>生日：</th>
-									<td><input type="text" name="Birthday" value="<?php echo $member['Birthday']; ?>"></td>
+									<td><input type="text" name="birthday" id="birthday" value="<?php echo $member['Birthday']; ?>"></td>
 								</tr>
 								<tr>
 									<th>聯絡電話：</th>
@@ -67,6 +67,7 @@
 									<td><input type="text" name="Address"></td>
 								</tr>
 								<tr>
+
 									<td colspan="2" align="center"><input type="submit" value="更新資料" id="submit" ></td>
 								</tr>
 						</table>
